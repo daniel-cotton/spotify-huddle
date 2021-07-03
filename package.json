@@ -1,0 +1,14 @@
+{
+  "name": "spotify-huddle",
+  "version": "0.0.1",
+  "main": "index.js",
+  "repository": "git@github.com:daniel-cotton/spotify-huddle.git",
+  "author": "Dan Cotton <dan@daniel-cotton.co.uk>",
+  "license": "MIT",
+  "dependencies": {
+    "@slack/bolt": "^3.4.0",
+    "dotenv": "^10.0.0",
+    "spotify-web-api-node": "^5.0.2",
+    "uuid": "^8.3.2"
+  }
+}
