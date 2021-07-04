@@ -34,7 +34,7 @@ module.exports = onAuthenticated => {
     command: (name, handler) => app.command(name, async (props) => {
       try {
         await connectionManager.refreshIfNeeded();
-        return await handler(name, props);
+        return await handler(props);
       } catch (e) {
         console.error(e);
         props.say({
@@ -45,7 +45,7 @@ module.exports = onAuthenticated => {
     action: (name, handler) => app.action(name, async (props) => {
       try {
         await connectionManager.refreshIfNeeded();
-        return await handler(name, props);
+        return await handler(props);
       } catch (e) {
         console.error(e);
         props.say({

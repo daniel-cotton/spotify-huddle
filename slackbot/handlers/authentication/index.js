@@ -31,13 +31,11 @@ module.exports = (boltApp, expressRouter, spotifyConnectionManager) => {
     });
 
     boltApp.action('auth_button', async ({ ack, client, body }) => {
-        console.log(body);
         // Acknowledge command request
         await ack();
 
         return new Promise((resolve) => {
             setTimeout(async () => {
-                console.log("AWAKE");
                 try {
                     const spotifyClient = spotifyConnectionManager.getClient();
                     if (spotifyClient) {
