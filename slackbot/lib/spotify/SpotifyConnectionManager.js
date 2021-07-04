@@ -43,6 +43,8 @@ module.exports = class SpotifyConnectionManager {
             'user-modify-playback-state',
             'user-read-currently-playing',
             'app-remote-control',
+            "user-read-email", 
+            "user-read-private",
             'streaming',
         ];
         this._authState = uuid();
