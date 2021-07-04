@@ -5,7 +5,8 @@ module.exports = new (class SlackTab {
         this.browser = await puppeteer.launch({
             headless: false,
             executablePath: process.env.EXECUTABLE,
-            userDataDir: '.data/slack'
+            userDataDir: '.data/slack',
+            args: [ '--use-fake-ui-for-media-stream' ]
         });
         this.page = await this.browser.newPage();
         await this.page.goto(process.env.SLACK_CHANNEL_URL);
