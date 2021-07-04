@@ -57,7 +57,7 @@ module.exports = new (class SlackTab {
                 await this.page.click('#huddle_toggle');
             }
         } else {
-            if (personCount && personCount > 1) {
+            if (personCount && personCount >= 1) {
                 // Time to join
                 await this.page.click('#huddle_toggle');
             } else {
