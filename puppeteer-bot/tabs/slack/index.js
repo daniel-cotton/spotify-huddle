@@ -30,7 +30,12 @@ module.exports = new (class SlackTab {
 
         await this.decidePlayPause();
     }
-    close() {
+    async close() {
+        const checkbox = await this.page.$('#huddle_toggle');
+        const isInHuddle = await (await checkbox.getProperty('checked')).jsonValue();
+        if (isInHuddle) {
+            await this.page.click('#huddle_toggle');
+        }
         return this.browser.close();
     }
     async decidePlayPause() {
