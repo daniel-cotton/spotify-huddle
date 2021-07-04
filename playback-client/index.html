@@ -9,12 +9,13 @@
   <script src="https://sdk.scdn.co/spotify-player.js"></script>
   <script>
     window.onSpotifyWebPlaybackSDKReady = () => {
-      const urlSearchParams = new URLSearchParams(window.location.search);
-      const token = urlParams.get('token');
-
       const player = new Spotify.Player({
         name: 'Web Playback SDK Quick Start Player',
-        getOAuthToken: cb => { cb(token); }
+        getOAuthToken: cb => { 
+          fetch('http://localhost:8081/token')
+            .then(r => r.json)
+            .then(jso => cb(jso.token))
+        }
       });
 
       // Error handling

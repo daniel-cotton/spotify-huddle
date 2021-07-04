@@ -13,9 +13,9 @@ module.exports = new (class PuppeteerClient {
           
     }
 
-    async onAuthenticated() {
+    async onAuthenticated(token) {
         // open playback tab
         await this._slackReady;
-        this._playbackReady = PlaybackTab.open();
+        this._playbackReady = PlaybackTab.open(token);
     }
 })();

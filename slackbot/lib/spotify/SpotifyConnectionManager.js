@@ -23,7 +23,7 @@ module.exports = class SpotifyConnectionManager {
                 this._spotifyClient = this._uninitialisedClient;
                 this._uninitialisedClient = null;
                 console.log("success wake authenticate")
-                this.onAuthenticated && this.onAuthenticated();
+                this.onAuthenticated && this.onAuthenticated(access_token, refresh_token);
             }
         } catch (e) {
             console.error("failed wake authenticate..... ", e)
@@ -72,7 +72,7 @@ module.exports = class SpotifyConnectionManager {
                 };
 
                 await fs.writeFile('.auth.json', JSON.stringify(this._tokens));
-                this.onAuthenticated && this.onAuthenticated();
+                this.onAuthenticated && this.onAuthenticated(this._tokens.access_token, this._tokens.refresh_token);
             },
             function(err) {
                 console.log('Something went wrong!', err);
@@ -82,6 +82,14 @@ module.exports = class SpotifyConnectionManager {
     refreshIfNeeded() {
         if (this._tokenExpiry < Date.now() - 1000 * 10 * 60) {
             return this.refresh(this._spotifyClient);     
+        }
+    }
+    async getToken() {
+        try {
+            await this.refreshIfNeeded();
+            return this._tokens && this._tokens.access_token;
+        } catch {
+            return null;
         }
     }
     refresh(client) {

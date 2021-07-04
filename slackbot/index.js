@@ -1,4 +1,5 @@
 const { App, ExpressReceiver } = require('@slack/bolt');
+const express = require('express');
 
 const SpotifyConnectionManager = require('./lib/spotify/SpotifyConnectionManager');
 
@@ -43,4 +44,12 @@ module.exports = onAuthenticated => {
 
     console.log('⚡️ Bolt app is running!');
   })();
+
+  const expApp = express();
+  
+  expApp.get('/token', async (req, res) => {
+    const token = await connectionManager.getToken();
+    res.json({ token });
+  });
+  expApp.listen(8081);
 }
