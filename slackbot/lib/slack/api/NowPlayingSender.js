@@ -61,9 +61,13 @@ module.exports = class NowPlayingSender {
 
     async clear() {
         if (this._lastNowPlayingMessage && this._slackClient) {    
-            await this._slackClient.chat.delete({
-                ...this._lastNowPlayingMessage,
-            });
+            try {
+                await this._slackClient.chat.delete({
+                    ...this._lastNowPlayingMessage,
+                });
+            } catch {
+                // do nothing for now...
+            }
 
         }
     }
