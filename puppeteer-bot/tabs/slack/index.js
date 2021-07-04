@@ -35,10 +35,10 @@ module.exports = new (class SlackTab {
     }
     async decidePlayPause() {
         const checkbox = await this.page.$('#huddle_toggle');
-        const personCount = await this.page.$('.p-huddle_activity__member_count_text');
+        const personCountEl = await this.page.$('.p-huddle_activity__member_count_text');
 
         const isInHuddle = await (await checkbox.getProperty('checked')).jsonValue();
-        const personCountText = personCount && await (await personCount.getProperty('innerText')).jsonValue();
+        const personCountText = personCountEl && await (await personCountEl.getProperty('innerText')).jsonValue();
 
         let personCount;
 
