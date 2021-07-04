@@ -8,7 +8,11 @@ module.exports = new (class SlackTab {
             userDataDir: '.data/slack'
         });
         this.page = await this.browser.newPage();
-        await this.page.goto(process.env.SLACK_CHANNEL_URL);            
+        await this.page.goto(process.env.SLACK_CHANNEL_URL);
+        
+        await this.page.waitForNavigation();
+
+        await this.page.click('#huddle_toggle');
     }
     close() {
         return this.browser.close();
