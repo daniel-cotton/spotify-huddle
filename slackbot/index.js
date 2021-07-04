@@ -52,5 +52,10 @@ module.exports = onAuthenticated => {
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080')
     res.json({ token });
   });
+  expApp.get('/deviceID', async (req, res) => {
+    connectionManager.setDeviceId(req.query.id);
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080')
+    res.json({ success: true });
+  });
   expApp.listen(8081);
 }

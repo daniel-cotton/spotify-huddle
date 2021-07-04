@@ -14,7 +14,7 @@ module.exports = (boltApp, expressRouter, spotifyConnectionManager, slackHelpers
             await ack();
             const spotifyClient = spotifyConnectionManager.getClient();
             if (spotifyClient) {
-                await spotifyClient.play();
+                await spotifyClient.play({ device_id: spotifyConnectionManager.deviceID });
                 slackHelpers.NowPlayingSender.checkState();
                 return slackHelpers.NowPlayingSender.sendNowPlayingMessage(say, client);
             }
@@ -27,7 +27,7 @@ module.exports = (boltApp, expressRouter, spotifyConnectionManager, slackHelpers
         await ack();
         const spotifyClient = spotifyConnectionManager.getClient();
         if (spotifyClient) {
-            await spotifyClient.pause();
+            await spotifyClient.pause({ device_id: spotifyConnectionManager.deviceID });
             return say({
                 text: `Paused.`
             })
@@ -39,7 +39,7 @@ module.exports = (boltApp, expressRouter, spotifyConnectionManager, slackHelpers
         await ack();
         const spotifyClient = spotifyConnectionManager.getClient();
         if (spotifyClient) {
-            await spotifyClient.skipToNext();
+            await spotifyClient.skipToNext({ device_id: spotifyConnectionManager.deviceID });
             const playbackStateData = await spotifyClient.getMyCurrentPlaybackState();
             const track = playbackStateData.body.item;
 

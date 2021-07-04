@@ -30,6 +30,9 @@ module.exports = class SpotifyConnectionManager {
             // do nothing for now.
         }
     }
+    setDeviceId(id) {
+        this.deviceID = id;
+    }
     isAuthenticated() {
         if (!this._spotifyClient) {
             return false;
