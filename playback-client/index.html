@@ -13,7 +13,7 @@
         name: 'Web Playback SDK Quick Start Player',
         getOAuthToken: cb => { 
           fetch('http://localhost:8081/token')
-            .then(r => r.json)
+            .then(r => r.json())
             .then(jso => cb(jso.token))
         }
       });
