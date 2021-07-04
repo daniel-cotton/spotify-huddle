@@ -7,7 +7,7 @@ module.exports = new (class PuppeteerClient {
         this._slackReady = SlackTab.open();
     }
 
-    onAuthenticated() {
+    async onAuthenticated() {
         // open playback tab
         await this._slackReady;
         this._playbackReady = PlaybackTab.open();
