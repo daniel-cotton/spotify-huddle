@@ -27,13 +27,13 @@ module.exports = new (class SlackTab {
             });
             observer.observe(target, { childList: true });
         });
-        
+
         await this.decidePlayPause();
     }
     close() {
         return this.browser.close();
     }
-    decidePlayPause() {
+    async decidePlayPause() {
         const checkbox = await this.page.$('#huddle_toggle');
         const personCount = await this.page.$('.p-huddle_activity__member_count_text');
 
