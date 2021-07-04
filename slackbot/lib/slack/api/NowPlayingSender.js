@@ -72,10 +72,14 @@ module.exports = class NowPlayingSender {
         if (this._lastNowPlayingMessage && this._slackClient && this._isPlaying) {
             const message = await this.getMessage();
             if (message) {
-                await this._slackClient.chat.update({
-                    ...this._lastNowPlayingMessage,
-                    ...message
-                });
+                try {
+                    await this._slackClient.chat.update({
+                        ...this._lastNowPlayingMessage,
+                        ...message
+                    });
+                } catch {
+                    // do nothing for now...
+                }
             }
         }
     }
