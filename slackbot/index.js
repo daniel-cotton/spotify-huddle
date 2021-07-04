@@ -13,7 +13,7 @@ const PlaybackHandler = require('./handlers/playback');
 module.exports = onAuthenticated => {
   
   const connectionManager = new SpotifyConnectionManager({
-    redirectUri: null,
+    redirectUri: process.env.PUBLIC_EP,
     clientId: process.env.SPOTIFY_CLIENT_ID,
     clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
     onAuthenticated

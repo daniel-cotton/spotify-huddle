@@ -3,11 +3,11 @@ const { v4 : uuid } = require('uuid');
 const fs = require('fs').promises
 
 module.exports = class SpotifyConnectionManager {
-    constructor({ clientId, clientSecret, onAuthenticated }) {
+    constructor({ clientId, clientSecret, onAuthenticated, redirectUri }) {
         this._uninitialisedClient = new SpotifyWebApi({
             clientId: clientId,
             clientSecret: clientSecret,
-            redirectUri: 'http://localhost:3000/callback'
+            redirectUri: redirectUri + '/callback'
         });
         this.onAuthenticated = onAuthenticated;
         this._wakeAuthenticate();
