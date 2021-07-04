@@ -25,7 +25,7 @@ module.exports = new (class SlackTab {
             const observer = new MutationObserver( mutations => {
                 puppeteerHuddleMutation();
             });
-            observer.observe(target, { childList: true });
+            observer.observe(target, { childList: true, subtree: true });
         });
 
         await this.decidePlayPause();
