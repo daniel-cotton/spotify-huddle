@@ -1,6 +1,6 @@
 const SpotifyWebApi = require('spotify-web-api-node');
 const { v4 : uuid } = require('uuid');
-const fs = require('fs/promises')
+const fs = require('fs').promises
 
 module.exports = class SpotifyConnectionManager {
     constructor({ clientId, clientSecret, onAuthenticated }) {
