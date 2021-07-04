@@ -49,6 +49,7 @@ module.exports = onAuthenticated => {
   
   expApp.get('/token', async (req, res) => {
     const token = await connectionManager.getToken();
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080')
     res.json({ token });
   });
   expApp.listen(8081);
