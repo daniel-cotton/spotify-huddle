@@ -29,6 +29,32 @@ module.exports = onAuthenticated => {
     receiver
   });
 
+  const errorHandleApp = ({
+    ...app,
+    command: async (name, handler) => app.command(name, (props) => {
+      try {
+        await connectionManager.refreshIfNeeded();
+        return await handler(name, props);
+      } catch (e) {
+        console.error(e);
+        props.say({
+          text: "Something went wrong, please retry."
+        })
+      }
+    }),
+    action: async (name, handler) => app.action(name, (props) => {
+      try {
+        await connectionManager.refreshIfNeeded();
+        return await handler(name, props);
+      } catch (e) {
+        console.error(e);
+        props.say({
+          text: "Something went wrong, please retry."
+        })
+      }
+    })
+  })
+
   const slackHelpers = {
     NowPlayingSender: new NowPlayingSender(connectionManager)
   }
