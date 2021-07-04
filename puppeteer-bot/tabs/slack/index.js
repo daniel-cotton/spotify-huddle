@@ -48,6 +48,7 @@ module.exports = new (class SlackTab {
 
         }
 
+        console.log("[SLACK] isInHuddle", isInHuddle, personCount)
         if (isInHuddle) {
             if (personCount && personCount > 1) {
                 // Great, do nothing!
