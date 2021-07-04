@@ -10,7 +10,7 @@ module.exports = new (class SlackTab {
         this.page = await this.browser.newPage();
         await this.page.goto(process.env.SLACK_CHANNEL_URL);
         
-        await this.page.waitForNavigation();
+        await page.waitFor(3*1000);
 
         await this.page.click('#huddle_toggle');
     }
