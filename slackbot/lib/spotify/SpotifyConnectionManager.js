@@ -3,12 +3,13 @@ const { v4 : uuid } = require('uuid');
 const fs = require('fs/promises')
 
 module.exports = class SpotifyConnectionManager {
-    constructor({ clientId, clientSecret }) {
+    constructor({ clientId, clientSecret, onAuthenticated }) {
         this._uninitialisedClient = new SpotifyWebApi({
             clientId: clientId,
             clientSecret: clientSecret,
             redirectUri: 'http://localhost:3000/callback'
         });
+        this.onAuthenticated = onAuthenticated;
         this._wakeAuthenticate();
     }
     async _wakeAuthenticate() {
@@ -22,6 +23,7 @@ module.exports = class SpotifyConnectionManager {
                 this._spotifyClient = this._uninitialisedClient;
                 this._uninitialisedClient = null;
                 console.log("success wake authenticate")
+                this.onAuthenticated && this.onAuthenticated();
             }
         } catch (e) {
             console.error("failed wake authenticate..... ", e)
@@ -70,6 +72,7 @@ module.exports = class SpotifyConnectionManager {
                 };
 
                 await fs.writeFile('.auth.json', JSON.stringify(this._tokens));
+                this.onAuthenticated && this.onAuthenticated();
             },
             function(err) {
                 console.log('Something went wrong!', err);

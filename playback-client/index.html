@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Spotify Web Playback SDK Quick Start Tutorial</title>
+  <title>Spotify Playback Client</title>
 </head>
 <body>
-  <h1>Spotify Web Playback SDK Quick Start Tutorial</h1>
-  <h2>Open your console log: <code>View > Developer > JavaScript Console</code></h2>
+  <h1>Spotify Playback Client</h1>
 
   <script src="https://sdk.scdn.co/spotify-player.js"></script>
   <script>
     window.onSpotifyWebPlaybackSDKReady = () => {
-      const token = '[My Spotify Web API access token]';
+      const urlSearchParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get('token');
+
       const player = new Spotify.Player({
         name: 'Web Playback SDK Quick Start Player',
         getOAuthToken: cb => { cb(token); }
