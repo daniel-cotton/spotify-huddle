@@ -31,7 +31,7 @@ module.exports = onAuthenticated => {
 
   const errorHandleApp = ({
     ...app,
-    command: async (name, handler) => app.command(name, (props) => {
+    command: (name, handler) => app.command(name, async (props) => {
       try {
         await connectionManager.refreshIfNeeded();
         return await handler(name, props);
@@ -42,7 +42,7 @@ module.exports = onAuthenticated => {
         })
       }
     }),
-    action: async (name, handler) => app.action(name, (props) => {
+    action: (name, handler) => app.action(name, async (props) => {
       try {
         await connectionManager.refreshIfNeeded();
         return await handler(name, props);
@@ -59,10 +59,10 @@ module.exports = onAuthenticated => {
     NowPlayingSender: new NowPlayingSender(connectionManager)
   }
 
-  AuthenticationHandler(app, receiver.router, connectionManager, slackHelpers);
-  SearchHandler(app, receiver.router, connectionManager, slackHelpers);
-  QueueingHandler(app, receiver.router, connectionManager, slackHelpers);
-  PlaybackHandler(app, receiver.router, connectionManager, slackHelpers);
+  AuthenticationHandler(errorHandleApp, receiver.router, connectionManager, slackHelpers);
+  SearchHandler(errorHandleApp, receiver.router, connectionManager, slackHelpers);
+  QueueingHandler(errorHandleApp, receiver.router, connectionManager, slackHelpers);
+  PlaybackHandler(errorHandleApp, receiver.router, connectionManager, slackHelpers);
 
   (async () => {
     // Start your app
