@@ -3,7 +3,8 @@ const puppeteer = require('puppeteer');
 module.exports = new (class SlackTab {
     async open() {
         this.browser = await puppeteer.launch({
-            headless: false
+            headless: false,
+            executablePath: process.env.EXECUTABLE
         });
         this.page = await this.browser.newPage();
         await this.page.goto('http://localhost:8080');
