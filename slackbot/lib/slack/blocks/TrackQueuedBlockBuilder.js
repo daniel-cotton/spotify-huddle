@@ -3,7 +3,7 @@ module.exports = (track, user) => console.log(user) || [
         "type": "section",
         "text": {
             "type": "mrkdwn",
-            "text": `New track added to the queue ${(user && user.username) ? `@${user.username}` : ""}:`
+            "text": `New track added to the queue ${(user && user.username) ? `by @${user.username}` : ""}:`
         }
     },
     {
