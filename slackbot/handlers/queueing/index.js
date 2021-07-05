@@ -67,6 +67,7 @@ module.exports = (boltApp, expressRouter, spotifyConnectionManager) => {
         
                     }
                 } catch (e) {
+                    console.error(e);
                     await say({
                         text: `Something went wrong, please retry later.`
                     });
