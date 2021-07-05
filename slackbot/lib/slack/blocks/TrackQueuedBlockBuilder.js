@@ -1,4 +1,4 @@
-module.exports = track => [
+module.exports = (track, user) => [
     {
         "type": "section",
         "text": {

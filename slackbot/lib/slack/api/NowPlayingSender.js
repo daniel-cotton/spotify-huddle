@@ -20,6 +20,7 @@ module.exports = class NowPlayingSender {
             const playbackState = playbackStateData.body;
 
             this._isPlaying = playbackState.is_playing;
+            console.log(track);
 
             if (!track) {
                 return {

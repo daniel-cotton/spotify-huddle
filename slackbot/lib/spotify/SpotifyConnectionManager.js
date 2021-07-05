@@ -2,8 +2,11 @@ const SpotifyWebApi = require('spotify-web-api-node');
 const { v4 : uuid } = require('uuid');
 const fs = require('fs').promises
 
+const SpotifyQueue = require('./SpotifyQueue');
+
 module.exports = class SpotifyConnectionManager {
     constructor({ clientId, clientSecret, onAuthenticated, redirectUri }) {
+        this._queue = new SpotifyQueue();
         this._uninitialisedClient = new SpotifyWebApi({
             clientId: clientId,
             clientSecret: clientSecret,
@@ -121,5 +124,8 @@ module.exports = class SpotifyConnectionManager {
     }
     getClient() {
         return this._spotifyClient;
+    }
+    getQueue() {
+        return this._queue;
     }
 }
