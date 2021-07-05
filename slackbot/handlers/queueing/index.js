@@ -1,6 +1,6 @@
 const TrackQueuedBlockBuilder = require('../../lib/slack/blocks/TrackQueuedBlockBuilder.js');
 
-module.exports = (boltApp, expressRouter, spotifyConnectionManager) => {
+module.exports = (boltApp, expressRouter, spotifyConnectionManager, slackHelpers) => {
 
     const enqueueTrack = (track, user) => {
         
@@ -31,6 +31,19 @@ module.exports = (boltApp, expressRouter, spotifyConnectionManager) => {
             }
         }
     }
+
+    const restartPlayer = () => {
+        
+        try {
+            const spotifyClient = spotifyConnectionManager.getClient();
+            if (spotifyClient && !slackHelpers.NowPlayingSender._isPlaying) {
+                await spotifyClient.play();
+            }
+        } catch (e) {
+            // We tried....
+            console.error("Error restarting player", e, JSON.stringify(e, null, 2));
+        }
+    }
     
     boltApp.action('queue_track', async ({ action, ack, client, body }) => {
         // Acknowledge command request
@@ -52,6 +65,7 @@ module.exports = (boltApp, expressRouter, spotifyConnectionManager) => {
                     blocks,
                     text: `Added ${track.body.name} to the queue.`
                 });
+                await restartPlayer();
             } else {
                 await say({
                     text: `Something went wrong, please retry later.`
@@ -83,6 +97,7 @@ module.exports = (boltApp, expressRouter, spotifyConnectionManager) => {
                             blocks,
                             text: `Added ${track.name} to the queue.`
                         });
+                        await restartPlayer();
                     } else {
                         await say({
                             text: `Something went wrong, please retry later.`
