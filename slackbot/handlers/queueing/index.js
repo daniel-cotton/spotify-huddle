@@ -2,7 +2,7 @@ const TrackQueuedBlockBuilder = require('../../lib/slack/blocks/TrackQueuedBlock
 
 module.exports = (boltApp, expressRouter, spotifyConnectionManager, slackHelpers) => {
 
-    const enqueueTrack = (track, user) => {
+    const enqueueTrack = async (track, user) => {
         
         try {
             const spotifyClient = spotifyConnectionManager.getClient();
@@ -32,7 +32,7 @@ module.exports = (boltApp, expressRouter, spotifyConnectionManager, slackHelpers
         }
     }
 
-    const restartPlayer = () => {
+    const restartPlayer = async () => {
         
         try {
             const spotifyClient = spotifyConnectionManager.getClient();
