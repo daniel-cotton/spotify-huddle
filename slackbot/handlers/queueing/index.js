@@ -44,7 +44,7 @@ module.exports = (boltApp, expressRouter, spotifyConnectionManager) => {
                     await spotifyClient.addToQueue(track.uri);
                     queue.enqueue(track, user);
         
-                    const blocks = TrackQueuedBlockBuilder(track);
+                    const blocks = TrackQueuedBlockBuilder(track, user);
                     await say({
                         blocks,
                         text: `Added ${track.name} to the queue.`
