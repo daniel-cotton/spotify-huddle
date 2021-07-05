@@ -7,12 +7,16 @@ module.exports = (boltApp, expressRouter, spotifyConnectionManager) => {
         await ack();
         const { value } = action;
         const spotifyClient = spotifyConnectionManager.getClient();
+        const queue = spotifyConnectionManager.getQueue();
+        const user = body.user ? body.user : {
+            username: body.user_name,
+        };
         if (spotifyClient) {
             const track = await spotifyClient.getTrack(value.split(":").pop());
             await spotifyClient.addToQueue(value);
-            queue.enqueue(track, body.user);
+            queue.enqueue(track, user);
 
-            const blocks = TrackQueuedBlockBuilder(track.body, body.user);
+            const blocks = TrackQueuedBlockBuilder(track.body, user);
             client.chat.update({
                 channel: body.channel.id,
                 ts: body.message.ts,
@@ -26,6 +30,9 @@ module.exports = (boltApp, expressRouter, spotifyConnectionManager) => {
         if (command.text) {
             // Acknowledge command request
             await ack();
+            const user = {
+                username: body.user_name,
+            };
             try {
                 const spotifyClient = spotifyConnectionManager.getClient();
                 const queue = spotifyConnectionManager.getQueue();
@@ -35,7 +42,7 @@ module.exports = (boltApp, expressRouter, spotifyConnectionManager) => {
         
                     const track = tracks[0];
                     await spotifyClient.addToQueue(track.uri);
-                    queue.enqueue(track, body.user);
+                    queue.enqueue(track, user);
         
                     const blocks = TrackQueuedBlockBuilder(track);
                     await say({
@@ -58,9 +65,9 @@ module.exports = (boltApp, expressRouter, spotifyConnectionManager) => {
                             device_id: spotifyConnectionManager.deviceID,
                             uris: [track.uri]
                         })
-                        queue.enqueue(track, body.user);
+                        queue.enqueue(track, user);
     
-                        const blocks = TrackQueuedBlockBuilder(track, body.user);
+                        const blocks = TrackQueuedBlockBuilder(track, user);
                         await say({
                             blocks,
                             text: `Added ${track.name} to the queue.`
