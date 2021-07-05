@@ -21,7 +21,7 @@ module.exports = class NowPlayingSender {
 
             this._isPlaying = playbackState.is_playing;
             console.log(track);
-            const attributedTrack = spotifyClient.getQueue().getAttributionAndAdvanceQueue(track);
+            const attributedTrack = this._spotifyConnectionManager.getQueue().getAttributionAndAdvanceQueue(track);
 
             if (!attributedTrack) {
                 return {
