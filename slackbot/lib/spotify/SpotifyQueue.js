@@ -1,5 +1,5 @@
 module.exports = class SpotifyQueue {
-    constructor({ }) {
+    constructor() {
         this._queue = []
     }
     async enqueue(track, user) {
