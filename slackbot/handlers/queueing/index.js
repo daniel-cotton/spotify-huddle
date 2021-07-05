@@ -28,7 +28,7 @@ module.exports = (boltApp, expressRouter, spotifyConnectionManager) => {
             await ack();
             try {
                 const spotifyClient = spotifyConnectionManager.getClient();
-                const queue = spotifyConnectionManager.getQueue;
+                const queue = spotifyConnectionManager.getQueue();
                 if (spotifyClient) {
                     const data = await spotifyClient.searchTracks(command.text);
                     const tracks = data.body.tracks.items;
@@ -47,7 +47,7 @@ module.exports = (boltApp, expressRouter, spotifyConnectionManager) => {
             } catch (e) {
                 try {
                     const spotifyClient = spotifyConnectionManager.getClient();
-                    const queue = spotifyConnectionManager.getQueue;
+                    const queue = spotifyConnectionManager.getQueue();
                     if (spotifyClient) {
                         const data = await spotifyClient.searchTracks(command.text);
                         const tracks = data.body.tracks.items;
