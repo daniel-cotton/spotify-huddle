@@ -1,9 +1,9 @@
-module.exports = (track, user) => [
+module.exports = (track, user) => console.log(user) || [
     {
         "type": "section",
         "text": {
             "type": "mrkdwn",
-            "text": "New track added to the queue:"
+            "text": `New track added to the queue ${(user && user.username) ? `@${user.username}` : ""}:`
         }
     },
     {

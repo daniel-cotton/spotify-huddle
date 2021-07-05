@@ -21,16 +21,17 @@ module.exports = class NowPlayingSender {
 
             this._isPlaying = playbackState.is_playing;
             console.log(track);
+            const attributedTrack = spotifyClient.getQueue().getAttributionAndAdvanceQueue(track);
 
-            if (!track) {
+            if (!attributedTrack) {
                 return {
                     text: "No currently playing tracks, why not add one?"
                 }
             }
 
             return {
-                blocks: NowPlayingBlockBuilder(track, playbackState),
-                text: `Now playing: ${track.name}`
+                blocks: NowPlayingBlockBuilder(attributedTrack, playbackState),
+                text: `Now playing: ${attributedTrack.name}`
             };
         }
     }
