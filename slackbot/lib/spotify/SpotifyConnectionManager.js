@@ -123,6 +123,11 @@ module.exports = class SpotifyConnectionManager {
         );
     }
     getClient() {
+        try {
+            this.refreshIfNeeded();
+        } catch {
+            // [TODO] add token refresh error handling?
+        }
         return this._spotifyClient;
     }
     getQueue() {
