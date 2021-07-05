@@ -13,24 +13,31 @@ module.exports = class NowPlayingSender {
     }
 
     async getMessage() {
-        const spotifyClient = this._spotifyConnectionManager.getClient();
-        if (spotifyClient) {
-            const playbackStateData = await spotifyClient.getMyCurrentPlaybackState();
-            const track = playbackStateData.body.item;
-            const playbackState = playbackStateData.body;
-
-            this._isPlaying = playbackState.is_playing;
-
-            if (!track) {
-                return {
-                    text: "No currently playing tracks, why not add one?"
+        try {
+            const spotifyClient = this._spotifyConnectionManager.getClient();
+            if (spotifyClient) {
+                const playbackStateData = await spotifyClient.getMyCurrentPlaybackState();
+                const track = playbackStateData.body.item;
+                const playbackState = playbackStateData.body;
+    
+                this._isPlaying = playbackState.is_playing;
+                console.log(track);
+                const attributedTrack = this._spotifyConnectionManager.getQueue().getAttributionAndAdvanceQueue(track);
+    
+                if (!attributedTrack) {
+                    return {
+                        text: "No currently playing tracks, why not add one?"
+                    }
                 }
+    
+                return {
+                    blocks: NowPlayingBlockBuilder(attributedTrack, playbackState),
+                    text: `Now playing: ${attributedTrack.name}`
+                };
             }
-
-            return {
-                blocks: NowPlayingBlockBuilder(track, playbackState),
-                text: `Now playing: ${track.name}`
-            };
+        } catch (e) {
+            // We tried....
+            console.error("Error getting playback state message", e, JSON.stringify(e, null, 2));
         }
     }
 

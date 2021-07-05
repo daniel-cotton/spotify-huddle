@@ -19,7 +19,7 @@ module.exports = (track, playbackState) => [
         "type": "section",
         "text": {
             "type": "mrkdwn",
-            "text": `*${track.name}* ${track.name !== track.album.name ? `(${track.album.name})` : ""}\n${track.artists.map(artist => artist.name).join(", ")}\n\n\n*${playbackState.is_playing ? "Playing" : "Paused"}*: ${formatMillisecondsAsPlayback(playbackState.progress_ms)} / ${formatMillisecondsAsPlayback(track.duration_ms)}`
+            "text": `*${track.name}* ${track.name !== track.album.name ? `(${track.album.name})` : ""}\n${track.artists.map(artist => artist.name).join(", ")}\n${(track.user && track.user.username) ? `Requested by @${track.user.username}` : ""}\n\n*${playbackState.is_playing ? "Playing" : "Paused"}*: ${formatMillisecondsAsPlayback(playbackState.progress_ms)} / ${formatMillisecondsAsPlayback(track.duration_ms)}`
         },
         "accessory": {
             "type": "image",
